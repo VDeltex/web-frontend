@@ -98,6 +98,7 @@ function InputToken({ readOnly }: { readOnly: boolean }): JSX.Element {
     const [isListShown, setListVisibility] = React.useState(false)
 
     const token = tokensList.get(selectedToken)
+    console.log(tokensList.tokens)
     const pollTokens = tokensList.tokens
         .filter(item => Dex.swap.tokens.some(obj => obj.token.toString() === item.root && (item.root !== (readOnly ? Dex.swap.leftToken : Dex.swap.rightToken))))
 

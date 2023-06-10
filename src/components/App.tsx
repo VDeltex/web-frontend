@@ -26,7 +26,7 @@ export function App(): JSX.Element {
     const wallet = useTvmWallet()
     const history = useHistory()
     const DexStoreProvider = useProvider(DexStore, wallet, history)
-    const listUri = 'https://raw.githubusercontent.com/LifeMoroz/testvenom/main/manifest.json'
+    const listUri = './manifest.json'
 
     return (
         <IntlProvider
