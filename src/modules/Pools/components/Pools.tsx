@@ -19,6 +19,10 @@ export default function PoolsInner(): JSX.Element {
     const wallet = useTvmWallet()
     const history = useHistory()
 
+    React.useEffect(() => {
+        Dex.weightedPools()
+    }, [wallet.isConnected])
+    
     const swap = (iPool: number) => {
         Dex.addSwap(iPool)
         history.push(appRoutes.swap.path)

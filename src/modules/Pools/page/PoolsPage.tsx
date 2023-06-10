@@ -19,9 +19,6 @@ export default function PoolsPage(): JSX.Element {
     const wallet = useTvmWallet()
     const Dex = useStore(DexStore)
 
-    React.useEffect(() => {
-        Dex.weightedPools()
-    }, [])
     
     return (
         <div className="pools">
