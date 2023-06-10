@@ -1,4 +1,5 @@
 import { DeltexCluster } from '@/abi/DeltexCluster.abi'
+import { TokenGiver } from '@/abi/TokenGiver.abi'
 import { TokenRoot } from '@/abi/TokenRoot.abi'
 import { TokenWalletUpgradeableAbi } from '@/abi/TokenWalletUpgradeable.abi'
 
@@ -9,6 +10,7 @@ import { type Address, type Contract } from 'everscale-inpage-provider'
 type DexClusterAbi = typeof DeltexCluster
 type DexTokenAbi = typeof TokenRoot
 type WalletUpgradeableAbi = typeof TokenWalletUpgradeableAbi
+type Giver = typeof TokenGiver
 
 export function DexClusterContract(
     address: Address,
@@ -32,3 +34,10 @@ export function TokenWallet(
     return new provider.Contract(TokenWalletUpgradeableAbi, resolveTvmAddress(address))
 }
 
+
+export function GiverContract(
+    address: Address,
+    provider = useRpcClient('venom'),
+): Contract<Giver> {
+    return new provider.Contract(TokenGiver, resolveTvmAddress(address))
+}

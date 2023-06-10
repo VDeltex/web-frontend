@@ -22,7 +22,7 @@ export default function PoolsInner(): JSX.Element {
     React.useEffect(() => {
         Dex.weightedPools()
     }, [wallet.isConnected])
-    
+
     const swap = (iPool: number) => {
         Dex.addSwap(iPool)
         history.push(appRoutes.swap.path)
@@ -35,6 +35,19 @@ export default function PoolsInner(): JSX.Element {
 
     return (
         <Flex>
+            {wallet.isConnected &&
+                <Button type='default'
+                    onClick={() => Dex.getTokens(wallet.account?.address!)}
+                    style={{
+                        position: "fixed",
+                        left: "30px",
+                        bottom: "30px",
+                        zIndex: "99",
+                        padding: " 0 20px",
+                    }}>
+                    Get tokens
+                </Button>
+            }
             {Dex.pools ? Dex.pools.map((item, iPool) => (
                 <Width size='1-3' style={{ cursor: 'pointer' }} className='uk-margin-medium-right uk-margin-medium-bottom'>
                     {/* <div>

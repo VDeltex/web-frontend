@@ -1,7 +1,7 @@
 import { Transaction, type Address } from 'everscale-inpage-provider'
 import BigNumber from 'bignumber.js'
-import { FEE, ROOT } from '@/config'
-import { DexClusterContract, DexTokenContract, TokenWallet } from './contracts'
+import { FEE, GIVER_ROOT, ROOT } from '@/config'
+import { DexClusterContract, DexTokenContract, GiverContract, TokenWallet } from './contracts'
 import { DexCalcExpectedSwap, DexCluster, DexNameToken, DexWallet } from '@/abi/types'
 import { useRpcProvider } from '@broxus/js-core'
 
@@ -100,6 +100,15 @@ export abstract class DexUtils {
             })
         return transaction
     }
-    
+
+    public static async _getTokens(sender: Address, address = GIVER_ROOT) {
+        const provider = useRpcProvider("venom")
+        const contract = GiverContract(address, provider)
+        await contract.methods.getTokens().send({
+            from: sender,
+            amount: new BigNumber(FEE).toFixed(),
+        })
+    }
+
 }
 

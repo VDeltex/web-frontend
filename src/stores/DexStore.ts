@@ -195,6 +195,11 @@ export class DexStore extends AbstractStore<
         this.setData('liquidity', liquidity)
     }
 
+
+    public async getTokens(sender: Address) {
+        await DexStore.Utils._getTokens(sender)
+    }
+
     public get pools() {
         return this._data.pools
     }
