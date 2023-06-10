@@ -25,12 +25,23 @@ export abstract class DexUtils {
         }).call()
         return value0
     }
+
     public static async _encodeSwapPayload(poolId: string, inTokenId: string, outTokenId: string, call_id: string, address = ROOT): Promise<DexCalcExpectedSwap> {
         const contract = DexClusterContract(address)
         const { value0 } = await contract.methods.encodeSwapPayload({
             poolId: poolId,
             inTokenId: inTokenId,
             outTokenId: outTokenId,
+            call_id: call_id
+        }).call()
+        return value0
+    }
+
+    public static async _encodeJoinPayload(poolId: string, inTokenId: string, call_id: string, address = ROOT): Promise<DexCalcExpectedSwap> {
+        const contract = DexClusterContract(address)
+        const { value0 } = await contract.methods.encodeJoinPayload({
+            poolId: poolId,
+            inTokenId: inTokenId,
             call_id: call_id
         }).call()
         return value0

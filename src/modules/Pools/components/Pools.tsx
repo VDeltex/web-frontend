@@ -2,7 +2,7 @@ import * as React from 'react'
 import { observer } from "mobx-react-lite"
 import { useStore } from '@/hooks/useStore'
 import { DexStore } from '@/stores/DexStore'
-import { Card, Flex, Text, Tile, Width } from '@broxus/react-uikit'
+import { Button, Card, Flex, Text, Tile, Width } from '@broxus/react-uikit'
 import { Pool } from './Pool'
 import BigNumber from 'bignumber.js'
 import { TextInput } from '@/components/TextInput'
@@ -24,18 +24,23 @@ export default function PoolsInner(): JSX.Element {
         history.push(appRoutes.swap.path)
     }
 
+    const liquidity = (iPool: number) => {
+        Dex.addLiquidity(iPool)
+        history.push(appRoutes.liquidity.path)
+    }
+
     return (
         <Flex>
             {Dex.pools ? Dex.pools.map((item, iPool) => (
-                <Width size='1-3' onClick={() => swap(iPool)} style={{ cursor: 'pointer' }} className='uk-margin-medium-right uk-margin-medium-bottom'>
-                    <div>
+                <Width size='1-3' style={{ cursor: 'pointer' }} className='uk-margin-medium-right uk-margin-medium-bottom'>
+                    {/* <div>
                         {item[1].tokens.map((item, i) => (
                             <Text>
                                 {//@ts-ignore 
                                     item.name}
                             </Text>
                         ))}
-                    </div>
+                    </div> */}
                     <Tile type='primary' className="uk-padding-small">
                         <table className="uk-table uk-table-divider uk-width-1-1 table uk-padding-remove uk-margin-small-bottom">
                             <thead className="uk-height-1-1">
@@ -65,6 +70,14 @@ export default function PoolsInner(): JSX.Element {
                                 </Text>
                             </Card>
                         </Tile>
+                        <Flex className='uk-margin-small-top' justifyContent='around'>
+                            <Button type='default' size='medium' onClick={() => swap(iPool)}>
+                                Make an swap
+                            </Button>
+                            <Button type='default' onClick={() => liquidity(iPool)}>
+                                Add liquidity
+                            </Button>
+                        </Flex>
                     </Tile>
                 </Width>
             ))

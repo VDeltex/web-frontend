@@ -18,6 +18,7 @@ import { Header } from './layout/Header'
 import { DexStore } from '@/stores/DexStore'
 import SwapPage from '@/modules/Swap/page/SwapPage'
 import { PROVIDERS_CONFIG } from '@/providers-config'
+import LiquidityPage from '@/modules/Liquidity/page/LiquidityPage'
 
 export function App(): JSX.Element {
     const localization = React.useContext(LocalizationContext)
@@ -57,10 +58,12 @@ export function App(): JSX.Element {
                                                     <Route path={appRoutes.swap.path}>
                                                         <SwapPage />
                                                     </Route>
+                                                    <Route path={appRoutes.liquidity.path}>
+                                                        <LiquidityPage />
+                                                    </Route>
                                                 </Switch>
                                             </DexStoreProvider>
                                         </main>
-                                        {/* <Footer key="footer" /> */}
                                     </div>
                                 </ScrollManager>
                             </Router>
