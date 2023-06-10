@@ -6,6 +6,7 @@ import { Button, Flex, Modal, Text, Tile } from '@broxus/react-uikit'
 import { TextInput } from '@/components/TextInput'
 import { ComposedTokenSelector, TokensList, useTokensListContext, useTokensWalletsContext, useTvmWalletContext } from '@broxus/react-modules'
 import BigNumber from 'bignumber.js'
+import { Pool } from '@/modules/Pools/components/Pool'
 
 export default function LiquidityFormInner(): JSX.Element {
 
@@ -37,6 +38,8 @@ export default function LiquidityFormInner(): JSX.Element {
             )
     }
 
+    console.log(Dex.liquidity.tokens)
+
     return (
         <div>
             <Observer>
@@ -57,6 +60,33 @@ export default function LiquidityFormInner(): JSX.Element {
                                 First you need select tokens...
                             </Button>
                         }
+                        <table className="uk-table uk-table-divider uk-width-1-1 table uk-padding-remove uk-margin-small-bottom">
+                            <thead className="uk-height-1-1">
+                                <tr>
+                                    <th className="uk-text-left uk-width-medium">Current liquidity:</th>
+                                    <th className="uk-text-left uk-width-medium">Balance liquidity:</th>
+                                </tr>
+                            </thead>
+                            <tbody className="uk-height-small">
+                                {Dex.liquidity ? Dex.liquidity.tokens.map((item, iToken) => (
+                                    <>
+                                        <tr>
+                                            <td className="uk-text-left uk-width-medium">
+                                                {item.name}
+                                            </td>
+                                            <td className="uk-text-left uk-width-medium">
+                                                {new BigNumber(item.balance).shiftedBy(-item?.decimals!).toFixed(4)}
+                                            </td>
+                                        </tr>
+                                    </>
+                                ))
+                                    :
+                                    <>
+
+                                    </>
+                                }
+                            </tbody>
+                        </table>
                     </Tile>
                 )}
             </Observer>
