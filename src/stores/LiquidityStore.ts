@@ -3,23 +3,22 @@ import { useWalletsCache } from "@broxus/react-modules";
 import { computed, makeObservable } from "mobx";
 import { DexUtils } from "./utils";
 
-type SwapStoreState = {
+type LiquidityStoreState = {
     amount?: string;
     total?: string
-    rightToken?: string
     leftToken?: string
     loading?: boolean
 }
 
-type SwapStoreData = {
+type LiquidityStoreData = {
     tokens: any[]
 
 }
 
 
-export class SwapStore extends AbstractStore<
-    SwapStoreData,
-    SwapStoreState
+export class LiquidityStore extends AbstractStore<
+    LiquidityStoreData,
+    LiquidityStoreState
 > {
 
     protected rpc = useRpcProvider()
@@ -44,9 +43,6 @@ export class SwapStore extends AbstractStore<
         this.setState('amount', value)
     }
 
-    public setRightToken(value: string): void {
-        this.setState('rightToken', value)
-    }
 
     public setLeftToken(value: string): void {
         this.setState('leftToken', value)
@@ -63,11 +59,6 @@ export class SwapStore extends AbstractStore<
     @computed
     public get amount(): string | undefined {
         return this._state.amount
-    }
-
-    @computed
-    public get rightToken(): string | undefined {
-        return this._state.rightToken
     }
 
     @computed

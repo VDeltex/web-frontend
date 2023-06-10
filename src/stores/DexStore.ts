@@ -8,6 +8,7 @@ import BigNumber from "bignumber.js";
 import { SwapStore } from "./SwapStore";
 import { ROOT } from "@/config";
 import { DexClusterContract } from "./contracts";
+import { LiquidityStore } from "./LiquidityStore";
 
 type DexStoreState = {
 }
@@ -19,6 +20,7 @@ export type marketsOptions = {
 type DexStoreData = {
     pools: DexCluster;
     swap: SwapStore;
+    liquidity: LiquidityStore;
 }
 
 
@@ -76,13 +78,13 @@ export class DexStore extends AbstractStore<
     }
 
     public async sendSwap(poolId: string, inTokenId: string, outTokenId: string, call_id: string, decimals: number, tokenWallet: Address) {
+        this._data.swap.setLoading(true)
         const encode = await DexStore.Utils._encodeSwapPayload(
             poolId,
             inTokenId,
             outTokenId,
             call_id
         )
-
         const provider = useRpcClient('venom')
         const subscriber = new provider.Subscriber()
         const contract = DexClusterContract(ROOT)
@@ -97,14 +99,16 @@ export class DexStore extends AbstractStore<
                     result.event === 'Swap'
                     && result.data.call_id === call_id
                 ) {
-                    alert("goog")
+                    this._data.swap.setTotal("0")
+                    this._data.swap.setAmount("")
+                    this._data.swap.setLoading(false)
                     return;
                 }
                 alert("error")
                 return undefined
             })
             .delayed(s => s.first())
-        console.log(tokenWallet)
+
         await DexStore.Utils._transfer(tokenWallet, this.wallet.account?.address!, {
             remainingGasTo: this.wallet.account?.address!,
             deployWalletValue: 0,
@@ -114,7 +118,50 @@ export class DexStore extends AbstractStore<
             payload: encode,
         })
         await successStream()
+        await subscriber.unsubscribe()
+    }
 
+    public async sendLiquidity(poolId: string, inTokenId: string, call_id: string, decimals: number, tokenWallet: Address) {
+        this._data.liquidity.setLoading(true)
+        const encode = await DexStore.Utils._encodeJoinPayload(
+            poolId,
+            inTokenId,
+            call_id
+        )
+        const provider = useRpcClient('venom')
+        const subscriber = new provider.Subscriber()
+        const contract = DexClusterContract(ROOT)
+        const successStream = await subscriber
+            .transactions(ROOT)
+            .flatMap(item => item.transactions)
+            .flatMap(transaction => contract.decodeTransactionEvents({
+                transaction,
+            }))
+            .filterMap(async result => {
+                if (
+                    result.event === 'Join'
+                    && result.data.call_id === call_id
+                ) {
+                    this._data.liquidity.setTotal("0")
+                    this._data.liquidity.setAmount("")
+                    this._data.liquidity.setLoading(false)
+                    return;
+                }
+                alert("error")
+                return undefined
+            })
+            .delayed(s => s.first())
+
+        await DexStore.Utils._transfer(tokenWallet, this.wallet.account?.address!, {
+            remainingGasTo: this.wallet.account?.address!,
+            deployWalletValue: 0,
+            amount: new BigNumber(this._data.liquidity.amount!).shiftedBy(decimals).toFixed(),
+            notify: true,
+            recipient: ROOT,
+            payload: encode,
+        })
+        await successStream()
+        await subscriber.unsubscribe()
     }
 
     public async addSwap(iPool: number) {
@@ -122,6 +169,10 @@ export class DexStore extends AbstractStore<
         this.setData('swap', swap)
     }
 
+    public async addLiquidity(iPool: number) {
+        const liquidity = new LiquidityStore(this.wallet, this._data.pools[iPool])
+        this.setData('liquidity', liquidity)
+    }
 
     public get pools() {
         return this._data.pools
@@ -131,4 +182,7 @@ export class DexStore extends AbstractStore<
         return this._data.swap
     }
 
+    public get liquidity() {
+        return this._data.liquidity
+    }
 }

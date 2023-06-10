@@ -30,4 +30,5 @@ export const appRoutes = {
     home: new Route('/'),
     swap: new Route<URLTokensParams>('/swap'),
     pools: new Route<URLTokensParams>('/pools'),
+    liquidity: new Route<URLTokensParams>('/liquidity'),
 }
