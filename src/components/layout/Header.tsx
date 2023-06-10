@@ -53,7 +53,7 @@ export function HeaderInner(): JSX.Element {
                                                 )}
                                         </Navbar.Right>
                                     )}
-                                </Observer>
+                                </Observer> 
                             </>
                         )
                         : (
