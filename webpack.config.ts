@@ -128,6 +128,10 @@ export default (_: any, options: any): WebpackConfig => {
                     },
                     {
                         context: 'public',
+                        from: 'manifest.json',
+                    },
+                    {
+                        context: 'public',
                         from: 'favicon.ico',
                     },
                     {
