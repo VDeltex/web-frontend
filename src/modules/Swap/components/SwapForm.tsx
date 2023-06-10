@@ -34,7 +34,7 @@ export default function SwapFormInner(): JSX.Element {
                 findIndexByParam(Dex.swap.rightToken).toString(),
                 new BigNumber(Dex.swap.amount).shiftedBy(token.decimals).toFixed()
             )
-        }else {
+        } else {
             Dex.swap.setState('total', '0')
         }
     }, [Dex.swap.rightToken, Dex.swap.leftToken, Dex.swap.amount, token])
@@ -99,7 +99,7 @@ function InputToken({ readOnly }: { readOnly: boolean }): JSX.Element {
 
     const token = tokensList.get(selectedToken)
     const pollTokens = tokensList.tokens
-        .filter(item => Dex.swap.tokens.some(obj => obj.token.toString() === item.root))
+        .filter(item => Dex.swap.tokens.some(obj => obj.token.toString() === item.root && (item.root !== (readOnly ? Dex.swap.leftToken : Dex.swap.rightToken))))
 
     const openListDialog = (): void => {
         setListVisibility(true)
