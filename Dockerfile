@@ -1,28 +1,16 @@
-FROM ubuntu:20.04 as builder
+FROM node:16-slim as dev
+RUN apt update
+RUN apt install -y python3 build-essential git
+RUN mkdir "app"
+WORKDIR app
+COPY ./package.json .
+RUN npm i
+CMD ["npm", "dev"]
 
-WORKDIR /app
+FROM dev as build
+COPY ./ .
+RUN npm run build
 
-RUN \
-    set -eux; \
-    apt-get update && \
-    apt-get install -y curl build-essential python git && \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs
-
-# .editorconfig .stylelintrc .eslintignore .eslintrc.js
-COPY package.json package-lock.json tsconfig.json webpack.config.ts .babelrc ./
-RUN \
-    set -eux; \
-    npm ci
-
-COPY src src
-COPY public public
-
-RUN \
-    set -eux; \
-    npm run build
-
-FROM nginx:1.21
-
-COPY --from=builder app/dist /usr/share/nginx/html
-COPY nginx-custom.conf /etc/nginx/conf.d/default.conf
+FROM nginx:latest as prod
+COPY --from=build /app/dist /www/
+COPY ./etc/nginx.conf /etc/nginx/conf.d/default.conf
