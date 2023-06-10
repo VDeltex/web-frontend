@@ -1,0 +1,7 @@
+{
+    "extends": ["@broxus/stylelint-config"],
+    "rules": {
+        "order/properties-alphabetical-order": true,
+        "order/properties-order": null
+    }
+}

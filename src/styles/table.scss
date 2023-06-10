@@ -1,0 +1,75 @@
+.table {
+    padding: 0 25px;
+
+    th {
+        border-bottom: 1px solid #363552;
+        color: #8b909a;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.1px;
+        line-height: 20px;
+        padding-bottom: 12px;
+        padding-top: 24px;
+
+        &:last-child {
+            padding-right: 13px;
+        }
+
+        &:first-child {
+            padding-left: 13px;
+        }
+    }
+
+    td {
+        border-bottom: 1px solid #363552;
+        color: #fff;
+        font-feature-settings: 'tnum' on, 'lnum' on;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0.1px;
+        line-height: 20px;
+
+        p {
+            margin: auto;
+        }
+
+        &:last-child {
+            padding-right: 13px;
+        }
+
+        &:first-child {
+            padding-left: 13px;
+        }
+    }
+
+    @media (width <=640px) {
+        padding: 0;
+    }
+}
+
+.pagination-container {
+    padding: 0 25px;
+}
+
+.listCard {
+    border-bottom: 1px solid #CCEFFA;
+
+    &--title {
+        color: #a6aab2;
+    }
+
+    .uk-formatted-token-amount {
+        span {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+        }
+    }
+}
+
+.empty-list {
+    p {
+        color: #fff;
+        font-size: 14px;
+    }
+}

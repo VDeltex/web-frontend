@@ -1,0 +1,24 @@
+[
+    {
+        "test": ".tsx?$",
+        "jsc": {
+            "parser": {
+                "syntax": "typescript",
+                "tsx": true,
+                "decorators": true,
+                "dynamicImport": true
+            }
+        }
+    },
+    {
+        "test": ".jsx?$",
+        "jsc": {
+            "parser": {
+                "syntax": "ecmascript",
+                "jsx": true,
+                "decorators": true,
+                "dynamicImport": true
+            }
+        }
+    }
+]
