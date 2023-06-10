@@ -27,7 +27,7 @@ export default function PoolsPage(): JSX.Element {
         <div className="pools">
             <Tile type='primary' className="uk-padding-small">
                 <Text component='h2' className='uk-text-center'>Pools</Text>
-                <Text component='p' className='uk-text-center'>Built on Balancer protocol</Text>
+                {/* <Text component='p' className='uk-text-center'>Built on Balancer protocol</Text> */}
             </Tile>
             <Pools />
         </div>

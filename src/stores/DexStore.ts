@@ -118,7 +118,7 @@ export class DexStore extends AbstractStore<
             payload: encode,
         })
         await successStream()
-
+        await subscriber.unsubscribe()
     }
 
     public async sendLiquidity(poolId: string, inTokenId: string, call_id: string, decimals: number, tokenWallet: Address) {
@@ -161,7 +161,7 @@ export class DexStore extends AbstractStore<
             payload: encode,
         })
         await successStream()
-
+        await subscriber.unsubscribe()
     }
 
     public async addSwap(iPool: number) {

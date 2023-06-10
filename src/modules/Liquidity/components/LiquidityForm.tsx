@@ -53,7 +53,7 @@ export default function LiquidityFormInner(): JSX.Element {
                                 </Button>
                                 :
                                 <Button disabled type='primary'>
-                                    Liquiding...
+                                    Adding liquidity...
                                 </Button>
                             :
                             <Button disabled type='primary'>

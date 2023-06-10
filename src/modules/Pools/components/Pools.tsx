@@ -45,8 +45,8 @@ export default function PoolsInner(): JSX.Element {
                         <table className="uk-table uk-table-divider uk-width-1-1 table uk-padding-remove uk-margin-small-bottom">
                             <thead className="uk-height-1-1">
                                 <tr>
-                                    <th className="uk-text-left uk-width-medium">Table Heading</th>
-                                    <th className="uk-text-left uk-width-medium">Table Heading</th>
+                                    <th className="uk-text-left uk-width-medium">Coin</th>
+                                    <th className="uk-text-left uk-width-medium">Weight</th>
                                 </tr>
                             </thead>
                             <tbody className="uk-height-small">
