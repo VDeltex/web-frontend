@@ -225,10 +225,10 @@ export function useTvmWallet(): TvmWalletService {
             networks: onlyTvmNetworks(networks),
         })
         service.setProvider(
-            useRpcProvider('venom'),
+            useRpcProvider('venom'), // fix
         )
         service.setConnection(
-            useRpcClient('venom')
+            useRpcProvider('venom'),
         )
         debug(
             `%c${service.constructor.name}%c has been created and ready to connect to TVM-compatible wallet`,
