@@ -38,8 +38,6 @@ export default function LiquidityFormInner(): JSX.Element {
             )
     }
 
-    console.log(Dex.liquidity.tokens)
-
     return (
         <div>
             <Observer>
@@ -47,14 +45,19 @@ export default function LiquidityFormInner(): JSX.Element {
                     <Tile type='primary' className="uk-padding-small form">
                         <InputToken />
                         {Dex.liquidity.leftToken ?
-                            !Dex.liquidity.loading ?
-                                <Button type='primary' onClick={onLiquidity}>
-                                    Liquidity
+                            token && (new BigNumber(tokensWallets.get(wallet.account?.address!, token?.address.toString()!)?.balance! ?? 0).shiftedBy(-token?.decimals!).toFixed()) < (Dex.liquidity.amount ?? 0) ?
+                                <Button type='primary' disabled>
+                                    Not enough money
                                 </Button>
                                 :
-                                <Button disabled type='primary'>
-                                    Adding liquidity...
-                                </Button>
+                                (!Dex.liquidity.loading ?
+                                    <Button type='primary' onClick={onLiquidity}>
+                                        Liquidity
+                                    </Button>
+                                    :
+                                    <Button disabled type='primary'>
+                                        Adding liquidity...
+                                    </Button>)
                             :
                             <Button disabled type='primary'>
                                 First you need select tokens...

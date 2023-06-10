@@ -34,6 +34,8 @@ export default function SwapFormInner(): JSX.Element {
                 findIndexByParam(Dex.swap.rightToken).toString(),
                 new BigNumber(Dex.swap.amount).shiftedBy(token.decimals).toFixed()
             )
+        }else {
+            Dex.swap.setState('total', '0')
         }
     }, [Dex.swap.rightToken, Dex.swap.leftToken, Dex.swap.amount, token])
 
@@ -57,14 +59,20 @@ export default function SwapFormInner(): JSX.Element {
                         <InputToken readOnly={false} />
                         <InputToken readOnly={true} />
                         {Dex.swap.leftToken && Dex.swap.rightToken ?
-                            !Dex.swap.loading ?
-                                <Button type='primary' onClick={onSwap}>
-                                    Swap
+                            token && (new BigNumber(tokensWallets.get(wallet.account?.address!, token?.address.toString()!)?.balance! ?? 0).shiftedBy(-token?.decimals!).toFixed()) < (Dex.swap.amount ?? 0) ?
+                                <Button type='primary' disabled>
+                                    Not enough money
                                 </Button>
                                 :
-                                <Button disabled type='primary'>
-                                    Swaping...
-                                </Button>
+                                (!Dex.swap.loading ?
+                                    <Button type='primary'
+                                        onClick={onSwap}>
+                                        Swap
+                                    </Button>
+                                    :
+                                    <Button disabled type='primary'>
+                                        Swaping...
+                                    </Button>)
                             :
                             <Button disabled type='primary'>
                                 First you need select tokens...
@@ -90,7 +98,6 @@ function InputToken({ readOnly }: { readOnly: boolean }): JSX.Element {
     const [isListShown, setListVisibility] = React.useState(false)
 
     const token = tokensList.get(selectedToken)
-
     const pollTokens = tokensList.tokens
         .filter(item => Dex.swap.tokens.some(obj => obj.token.toString() === item.root))
 

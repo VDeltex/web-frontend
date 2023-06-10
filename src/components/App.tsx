@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    BrowserRouter as Router, Redirect, Route, Switch,
+    BrowserRouter as Router, Redirect, Route, Switch, useHistory,
 } from 'react-router-dom'
 import { TokensListProvider, TokensWalletsProvider, TvmWalletProvider, TvmWalletProvidersProvider } from '@broxus/react-modules'
 import { IntlProvider } from 'react-intl'
@@ -19,11 +19,13 @@ import { DexStore } from '@/stores/DexStore'
 import SwapPage from '@/modules/Swap/page/SwapPage'
 import { PROVIDERS_CONFIG } from '@/providers-config'
 import LiquidityPage from '@/modules/Liquidity/page/LiquidityPage'
+import { Toaster } from 'react-hot-toast'
 
 export function App(): JSX.Element {
     const localization = React.useContext(LocalizationContext)
     const wallet = useTvmWallet()
-    const DexStoreProvider = useProvider(DexStore, wallet)
+    const history = useHistory()
+    const DexStoreProvider = useProvider(DexStore, wallet, history)
     const listUri = 'https://raw.githubusercontent.com/LifeMoroz/testvenom/main/manifest.json'
 
     return (
@@ -63,6 +65,7 @@ export function App(): JSX.Element {
                                                     </Route>
                                                 </Switch>
                                             </DexStoreProvider>
+                                            <Toaster />
                                         </main>
                                     </div>
                                 </ScrollManager>

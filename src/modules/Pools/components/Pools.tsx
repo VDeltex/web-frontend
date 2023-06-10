@@ -70,14 +70,17 @@ export default function PoolsInner(): JSX.Element {
                                 </Text>
                             </Card>
                         </Tile>
-                        <Flex className='uk-margin-small-top' justifyContent='around'>
-                            <Button type='default' size='medium' onClick={() => swap(iPool)}>
-                                Make an swap
-                            </Button>
-                            <Button type='default' onClick={() => liquidity(iPool)}>
-                                Add liquidity
-                            </Button>
-                        </Flex>
+
+                        {wallet.isConnected &&
+                            <Flex className='uk-margin-small-top' justifyContent='around'>
+                                <Button type='default' size='medium' onClick={() => swap(iPool)}>
+                                    Make an swap
+                                </Button>
+                                <Button type='default' onClick={() => liquidity(iPool)}>
+                                    Add liquidity
+                                </Button>
+                            </Flex>
+                        }
                     </Tile>
                 </Width>
             ))
