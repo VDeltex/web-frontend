@@ -10,13 +10,15 @@ export abstract class DexUtils {
 
     // ClusterContract
     public static async _weightedPools(address = ROOT): Promise<DexCluster> {
-        const contract = DexClusterContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexClusterContract(address, provider)
         const { weightedPools } = await contract.methods.weightedPools().call()
         return weightedPools
     }
 
     public static async _calcExpectedSwap(poolId: string, inTokenId: string, outTokenId: string, amountIn: string, address = ROOT): Promise<DexCalcExpectedSwap> {
-        const contract = DexClusterContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexClusterContract(address, provider)
         const { value0 } = await contract.methods.calcExpectedSwap({
             poolId: poolId,
             inTokenId: inTokenId,
@@ -27,7 +29,8 @@ export abstract class DexUtils {
     }
 
     public static async _encodeSwapPayload(poolId: string, inTokenId: string, outTokenId: string, call_id: string, address = ROOT): Promise<DexCalcExpectedSwap> {
-        const contract = DexClusterContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexClusterContract(address, provider)
         const { value0 } = await contract.methods.encodeSwapPayload({
             poolId: poolId,
             inTokenId: inTokenId,
@@ -38,7 +41,8 @@ export abstract class DexUtils {
     }
 
     public static async _encodeJoinPayload(poolId: string, inTokenId: string, call_id: string, address = ROOT): Promise<DexCalcExpectedSwap> {
-        const contract = DexClusterContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexClusterContract(address, provider)
         const { value0 } = await contract.methods.encodeJoinPayload({
             poolId: poolId,
             inTokenId: inTokenId,
@@ -50,7 +54,8 @@ export abstract class DexUtils {
 
     // TokenContract
     public static async _getName(address: Address): Promise<DexNameToken> {
-        const contract = DexTokenContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexTokenContract(address, provider)
         const { value0 } = await contract.methods.name({
             answerId: "0"
         }).call()
@@ -58,7 +63,8 @@ export abstract class DexUtils {
     }
 
     public static async _getDecimals(address: Address): Promise<DexNameToken> {
-        const contract = DexTokenContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexTokenContract(address, provider)
         const { value0 } = await contract.methods.decimals({
             answerId: "0"
         }).call()
@@ -66,7 +72,8 @@ export abstract class DexUtils {
     }
 
     public static async _getWallet(owner: Address, address: Address): Promise<DexWallet> {
-        const contract = DexTokenContract(address)
+        const provider = useRpcProvider("venom")
+        const contract = DexTokenContract(address, provider)
         const { value0 } = await contract.methods.walletOf({
             answerId: "0",
             walletOwner: owner,

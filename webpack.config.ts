@@ -106,8 +106,8 @@ export default (_: any, options: any): WebpackConfig => {
 
     config.plugins.push(
         new HtmlWebpackPlugin({
-            title: 'VDeltex',
-            favicon: 'public/favicon.svg',
+            title: 'Deltex',
+            favicon: 'public/favicon.ico',
             filename: path.resolve(__dirname, 'dist/index.html'),
             template: 'public/index.html',
             inject: false,
@@ -128,7 +128,7 @@ export default (_: any, options: any): WebpackConfig => {
                     },
                     {
                         context: 'public',
-                        from: 'favicon.svg',
+                        from: 'favicon.ico',
                     },
                     {
                         context: 'public',

@@ -89,7 +89,7 @@ export class DexStore extends AbstractStore<
             outTokenId,
             call_id
         )
-        const provider = useRpcClient('venom')
+        const provider = useRpcProvider('venom')
         const subscriber = new provider.Subscriber()
         const contract = DexClusterContract(ROOT)
         const successStream = await subscriber
@@ -141,7 +141,7 @@ export class DexStore extends AbstractStore<
             inTokenId,
             call_id
         )
-        const provider = useRpcClient('venom')
+        const provider = useRpcProvider('venom')
         const subscriber = new provider.Subscriber()
         const contract = DexClusterContract(ROOT)
         const successStream = await subscriber
