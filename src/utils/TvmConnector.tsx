@@ -80,7 +80,7 @@ export const TvmConnector = observer((props: TvmConnectorProps) => {
                     const isDisconnected = !wallet.isConnected || wallet.address === undefined
                     const icon = `tvm${wallet.networkId}BlockchainIcon` as keyof DefaultLibraryType
                     const service = wallet.providerId === 'ever' ? 'everWallet' : `${wallet.providerId.toLowerCase()}Wallet`
-                    const walletIcon = `${camelify(camelToSnake(service))}Icon` as keyof DefaultLibraryType
+                    const walletIcon = `${camelify(camelToSnake('venomWallet'))}Icon` as keyof DefaultLibraryType
                     let subTitle: React.ReactNode = intl.formatMessage(defineMessages.WALLET_NOT_CONNECTED_HINT)
                     if (wallet.isSyncing) {
                         subTitle = <Skeleton width={80} />
