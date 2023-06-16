@@ -86,9 +86,7 @@ export const TvmConnector = observer((props: TvmConnectorProps) => {
                         subTitle = <Skeleton width={80} />
                     }
                     else if (wallet.isReady) {
-                        subTitle = `${formattedTokenAmount(wallet.balance, wallet.currency.decimals)} ${
-                            wallet.currency.symbol
-                        }`
+                        subTitle = `${formattedTokenAmount(wallet.balance, wallet.currency.decimals)} VENOM`
                     }
 
                     return (
